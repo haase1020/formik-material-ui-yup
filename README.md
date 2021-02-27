@@ -1,3 +1,10 @@
+# formik-material-ui-yup
+
+A practice app for formik, Material UI, and yup validation
+
+- Based off of this [tutorial](https://www.youtube.com/watch?v=ziWJ4k_3BLk&t=143s)
+- Thank you [Justin Kim](https://www.youtube.com/channel/UCEA2aEANvCH0evxQni-LIQg) for your incredibly helpful content!
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
