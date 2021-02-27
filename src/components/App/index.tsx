@@ -10,11 +10,17 @@ import "./App.css";
 
 interface FormValues {
   name: string;
+  email: string;
+  password: string;
+  passwordConfirm: string;
   position: string;
 }
 
 const initialValues: FormValues = {
   name: "",
+  email: "",
+  password: "",
+  passwordConfirm: "",
   position: "",
 };
 
@@ -37,8 +43,28 @@ const positionItems: FormikSelectItem[] = [
   },
 ];
 
+const emailAddresses = ["test@gmail.com", "test1@gmail.com", "test2@gmail.com"];
+
+const lowercaseRegex = /(?=.*[a-z])/;
+const uppercaseRegex = /(?=.*[A-Z])/;
+const numericRegex = /(?=.*[0-9])/;
+
 const SignupSchema = Yup.object().shape({
   name: Yup.string().min(2, "Too Short!").required("Required"),
+  email: Yup.string()
+    .lowercase()
+    .email("Must be a valid email!")
+    .notOneOf(emailAddresses, "Email already taken!")
+    .required("Required!"),
+  password: Yup.string()
+    .matches(lowercaseRegex, "one lowercase required!")
+    .matches(uppercaseRegex, "one uppercase required!")
+    .matches(numericRegex, "one number required!")
+    .min(8, "Minimum 8 characters required!")
+    .required("Required!"),
+  passwordConfirm: Yup.string()
+    .oneOf([Yup.ref("password")], "Password must be the same!")
+    .required("Required!"),
   position: Yup.string().required("Required"),
 });
 
@@ -59,6 +85,20 @@ const App: React.FC = () => {
           return (
             <Form>
               <FormikField name="name" label="Name" required />
+              <FormikField name="email" label="Email" required />
+              <FormikField
+                name="password"
+                label="Password"
+                required
+                type="password"
+              />
+              <FormikField
+                name="passwordConfirm"
+                label="Confirm Password"
+                required
+                type="password"
+              />
+
               <FormikSelect
                 name="position"
                 items={positionItems}
